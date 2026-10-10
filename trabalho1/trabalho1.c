@@ -91,80 +91,40 @@ int q1(char data[]) {
     int datavalida = 1;
     int qnt_barras = 0;
 
-    // quebrar a string data em strings sDia, sMes, sAno
-    char sDia[3], sMes[3], sAno[5];
-    int iDia = 0, iMes = 0, iAno = 0; // controle de indices
-
-    for (int i = 0; data[i] != '\0'; i++) {
-        if (data[i] == '/') {
-            qnt_barras++;
-            continue;
-        }
-        switch (qnt_barras) {
-            case 0: // dia
-                sDia[iDia] = data[i];
-                iDia++;
-                break;
-            case 1: // mes
-                sMes[iMes] = data[i];
-                iMes++;
-                break;
-            case 2: // ano
-                sAno[iAno] = data[i];
-                iAno++;
-                break;
-        }
-    }
-
-    sDia[iDia] = '\0';
-    sMes[iMes] = '\0';
-    sAno[iAno] = '\0';
-
-    // verificação do tamanho
-    int tam_dia = strlen(sDia);
-    int tam_mes = strlen(sMes);
-    int tam_ano = strlen(sAno);
-
-    if (tam_dia < 1 || tam_dia > 2) datavalida = 0;
-    if (tam_mes < 1 || tam_mes > 2) datavalida = 0;
-    if (tam_ano != 2 && tam_ano != 4) datavalida = 0;
-
-    // CONVERSÃO PARA INT
-
     //converter dia
     int dia = 0;
-    switch (tam_dia) {
-        case 1:
-            dia = sDia[0] - '0';
-            break;
-        case 2:
-            dia = ((sDia[0] - '0') * 10) + (sDia[1] - '0');
-            break;
-    }
-
+    
     //converter mes
     int mes = 0;
-    switch (tam_mes) {
-        case 1:
-            mes = sMes[0] - '0';
-            break;
-        case 2:
-            mes = ((sMes[0] - '0') * 10) + (sMes[1] - '0');
-            break;
-    }
-
+    
     //converter ano
     int ano = 0;
 
-    switch (tam_ano) {
-        case 2:
-            ano = ((sAno[0] - '0') * 10) + (sAno[1] - '0');
-            break;
-        case 4:
-            for (int i = 0; i < tam_ano; i++) {
-                ano = (ano * 10) + (sAno[i] - '0');
+    for(int i = 0; data[i] != '\0'; i++){
+        if(data[i] == '/'){
+            qnt_barras++;
+        }
+        else {
+            if(data[i] < '0' || data[i] > '9') {
+                datavalida = 0;
+                break;
             }
-            break;
+
+            switch(qnt_barras){
+                case 0:
+                    dia = (dia * 10) + (data[i] - '0');
+                    break;
+                case 1:
+                    mes = (mes * 10) + (data[i] - '0');
+                    break;
+                case 2:
+                    ano = (ano * 10) + (data[i] - '0');
+                    break;
+                default:
+                    datavalida = 0;
+                    break;            
+            }
+        }
     }
 
     //validacao de validade
