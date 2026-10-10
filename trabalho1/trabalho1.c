@@ -26,7 +26,6 @@
 #include <string.h>
 
 DataQuebrada quebraData(char data[]);
-
 /*
 ## função utilizada para testes  ##
 
