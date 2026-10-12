@@ -92,24 +92,24 @@ int q1(char data[]) {
 
     //converter dia
     int dia = 0;
-    
+
     //converter mes
     int mes = 0;
-    
+
     //converter ano
     int ano = 0;
 
-    for(int i = 0; data[i] != '\0'; i++){
-        if(data[i] == '/'){
+    for (int i = 0; data[i] != '\0'; i++) {
+        if (data[i] == '/') {
             qnt_barras++;
         }
         else {
-            if(data[i] < '0' || data[i] > '9') {
+            if (data[i] < '0' || data[i] > '9') {
                 datavalida = 0;
                 break;
             }
 
-            switch(qnt_barras){
+            switch (qnt_barras) {
                 case 0:
                     dia = (dia * 10) + (data[i] - '0');
                     break;
@@ -121,7 +121,7 @@ int q1(char data[]) {
                     break;
                 default:
                     datavalida = 0;
-                    break;            
+                    break;
             }
         }
     }
@@ -174,8 +174,24 @@ DiasMesesAnos q2(char datainicial[], char datafinal[]) {
     }
     else {
         // verifique se a data final não é menor que a data inicial
+        int data1 = 0, data2 = 0;
+
+        DataQuebrada dq_ini = quebraData(datainicial);
+        DataQuebrada dq_fim = quebraData(datafinal);
+
+        data1 = (dq_ini.iAno * 10000) + (dq_ini.iMes * 100) + (dq_ini.iDia);
+        data2 = (dq_fim.iAno * 10000) + (dq_fim.iMes * 100) + (dq_fim.iDia);
+
+        if (data1 > data2) {
+            dma.retorno = 4;
+            return dma;
+        }
 
         // calcule a distancia entre as datas
+
+        dma.qtdAnos = dq_fim.iAno - dq_ini.iAno;
+        dma.qtdMeses = dq_fim.iMes - dq_ini.iMes;
+        dma.qtdDias = dq_fim.iDia - dq_ini.iDia;
 
         // se tudo der certo
         dma.retorno = 1;
