@@ -24,7 +24,7 @@
 #include "trabalho1.h"
 #include <stdlib.h>
 #include <string.h>
-
+#include <ctype.h>
 DataQuebrada quebraData(char data[]);
 /*
 ## função utilizada para testes  ##
@@ -194,8 +194,23 @@ DiasMesesAnos q2(char datainicial[], char datafinal[]) {
     Um número n >= 0.
  */
 int q3(char* texto, char c, int isCaseSensitive) {
-    int qtdOcorrencias = -1;
+    int qtdOcorrencias = 0;
 
+    if(isCaseSensitive){
+        for(int i = 0; texto[i] != '\0'; i++){
+            if(texto[i] == c){
+                qtdOcorrencias++;
+            }
+        }
+    }
+    else{
+        for(int i = 0; texto[i] != '\0'; i++){
+            if(tolower(texto[i]) == tolower(c)){
+                qtdOcorrencias++;
+            }
+        }
+    }
+    printf("\nqnt: %d\n",qtdOcorrencias);
     return qtdOcorrencias;
 }
 
