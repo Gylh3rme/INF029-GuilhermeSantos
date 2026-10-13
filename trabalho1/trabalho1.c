@@ -230,8 +230,36 @@ int q3(char* texto, char c, int isCaseSensitive) {
 
  */
 int q4(char* strTexto, char* strBusca, int posicoes[30]) {
-    int qtdOcorrencias = -1;
+    int qtdOcorrencias = 0;
+    int achou = 0;
+    int i = 0, j = 1;
 
+    printf("\n%s\n",strTexto);
+    printf("\n%s\n",strBusca);
+
+    for (i = 0; strTexto[i] != '\0'; i++)
+    {   
+        if(strTexto[i] == strBusca[0]){
+            achou = 1;
+            for(j = 1; strBusca[j] != '\0'; j++){
+                if(strBusca[j] != strTexto[i+j]){
+                    achou = 0;
+                    break;
+                }
+            }
+            if(achou){
+                qtdOcorrencias++;
+                printf("\nachou = %d\n", achou);
+                printf("\ni = %d\nj = %d\n", i, j);
+                printf("\ni + 1 = %d\n i + j = %d\n", i + 1, j + i);
+            }
+        }
+    }
+    printf("\nqtd: %d\n",qtdOcorrencias);
+    for(int l = 0; l < qtdOcorrencias * 2; l += 2){
+        posicoes[l] = i - 1;
+        posicoes[l+1] = i + j - 1;
+    }
     return qtdOcorrencias;
 }
 
