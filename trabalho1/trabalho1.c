@@ -173,25 +173,47 @@ DiasMesesAnos q2(char datainicial[], char datafinal[]) {
         return dma;
     }
     else {
-        // verifique se a data final não é menor que a data inicial
-        int data1 = 0, data2 = 0;
+        DataQuebrada di = quebraData(datainicial);
+        DataQuebrada df = quebraData(datafinal);
 
-        DataQuebrada dq_ini = quebraData(datainicial);
-        DataQuebrada dq_fim = quebraData(datafinal);
+        int max_dias[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
-        data1 = (dq_ini.iAno * 10000) + (dq_ini.iMes * 100) + (dq_ini.iDia);
-        data2 = (dq_fim.iAno * 10000) + (dq_fim.iMes * 100) + (dq_fim.iDia);
+        int bissexto = (df.iAno % 4 == 0 && (df.iAno % 100 != 0 || df.iAno % 400 == 0)) ? 1 : 0; //ano bissexto
 
-        if (data1 > data2) {
+        if (bissexto) {
+            max_dias[1] = 29;
+        }
+
+        if (di.iAno > df.iAno) {
+            dma.retorno = 4;
+            return dma;
+        }
+        else if (di.iMes > df.iMes) {
+            dma.retorno = 4;
+            return dma;
+        }
+        else if (di.iDia > df.iDia) {
             dma.retorno = 4;
             return dma;
         }
 
-        // calcule a distancia entre as datas
+        int difD = 0, difM = 0, difA = 0;
+        difD = df.iDia - di.iDia;
+        difM = df.iMes - di.iMes;
+        difA = df.iAno - di.iAno;
 
-        dma.qtdAnos = dq_fim.iAno - dq_ini.iAno;
-        dma.qtdMeses = dq_fim.iMes - dq_ini.iMes;
-        dma.qtdDias = dq_fim.iDia - dq_ini.iDia;
+        if (difD < 0) {
+            difD = (df.iDia + max_dias[df.iMes - 2]) - di.iDia;
+            difM -= 1;
+        }
+        if (difM < 0) {
+            difM = (abs(difM) + 12) - di.iMes;
+            difA -= 1;
+        }
+
+        dma.qtdAnos = difA;
+        dma.qtdMeses = difM;
+        dma.qtdDias = difD;
 
         // se tudo der certo
         dma.retorno = 1;
@@ -212,21 +234,21 @@ DiasMesesAnos q2(char datainicial[], char datafinal[]) {
 int q3(char* texto, char c, int isCaseSensitive) {
     int qtdOcorrencias = 0;
 
-    if(isCaseSensitive){
-        for(int i = 0; texto[i] != '\0'; i++){
-            if(texto[i] == c){
+    if (isCaseSensitive) {
+        for (int i = 0; texto[i] != '\0'; i++) {
+            if (texto[i] == c) {
                 qtdOcorrencias++;
             }
         }
     }
-    else{
-        for(int i = 0; texto[i] != '\0'; i++){
-            if(tolower(texto[i]) == tolower(c)){
+    else {
+        for (int i = 0; texto[i] != '\0'; i++) {
+            if (tolower(texto[i]) == tolower(c)) {
                 qtdOcorrencias++;
             }
         }
     }
-    printf("\nqnt: %d\n",qtdOcorrencias);
+    printf("\nqnt: %d\n", qtdOcorrencias);
     return qtdOcorrencias;
 }
 
@@ -248,34 +270,35 @@ int q3(char* texto, char c, int isCaseSensitive) {
 int q4(char* strTexto, char* strBusca, int posicoes[30]) {
     int qtdOcorrencias = 0;
     int achou = 0;
-    int i = 0, j = 1;
+    int i = 0, j = 1, l = 0;
+    int acentos = 0;
+    printf("\n%s\n", strTexto);
+    printf("\n%s\n", strBusca);
+    for (i = 0; strTexto[i] != '\0'; i++) {
+        if (strTexto[i] == -61)
+            acentos++;
 
-    printf("\n%s\n",strTexto);
-    printf("\n%s\n",strBusca);
-
-    for (i = 0; strTexto[i] != '\0'; i++)
-    {   
-        if(strTexto[i] == strBusca[0]){
+        if (strTexto[i] == strBusca[0]) {
             achou = 1;
-            for(j = 1; strBusca[j] != '\0'; j++){
-                if(strBusca[j] != strTexto[i+j]){
+            for (j = 1; strBusca[j] != '\0'; j++) {
+                if (strBusca[j] != strTexto[i + j]) {
                     achou = 0;
                     break;
                 }
             }
-            if(achou){
+            if (achou) {
                 qtdOcorrencias++;
-                printf("\nachou = %d\n", achou);
-                printf("\ni = %d\nj = %d\n", i, j);
-                printf("\ni + 1 = %d\n i + j = %d\n", i + 1, j + i);
+                posicoes[l] = i + 1 - acentos;
+                posicoes[l + 1] = i + j - acentos;
+                l += 2;
+                // printf("\nachou = %d\n", achou);
+                // printf("\ni = %d\nj = %d\n", i, j);
+                // printf("\nacentos: %d\n", acentos);
+                // printf("\ni + 1 = %d\n i + j = %d\n", i + 1 - acentos, j + i - acentos);
             }
         }
     }
-    printf("\nqtd: %d\n",qtdOcorrencias);
-    for(int l = 0; l < qtdOcorrencias * 2; l += 2){
-        posicoes[l] = i - 1;
-        posicoes[l+1] = i + j - 1;
-    }
+
     return qtdOcorrencias;
 }
 

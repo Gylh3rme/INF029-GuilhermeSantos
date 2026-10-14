@@ -30,29 +30,26 @@ void testQ5();
 void testQ6();
 void testQ7();
 
-int main()
-{
-  /*testSomar();*/
-  /*testFatorial();*/
-    /*testQ1();*/
-    /*testQ2();*/
-    /*testQ3();*/
-   testQ4();
-  /*testQ5();*/
-  /*testQ6();*/
-  /*testQ7();*/
+int main() {
+    /*testSomar();*/
+    /*testFatorial();*/
+      /*testQ1();*/
+      /*testQ2();*/
+      /*testQ3();*/
+    testQ4();
+    /*testQ5();*/
+    /*testQ6();*/
+    /*testQ7();*/
 
 }
 
 int ligado = 1;
-void show_log(char *str)
-{
+void show_log(char* str) {
     if (ligado)
         printf("###%s###\n", str);
-}  
+}
 
-void testSomar()
-{
+void testSomar() {
     show_log("testeSomar()");
     printf("%d\n", somar(3, 4) == 7);
     printf("%d\n", somar(-1, -3) == -4);
@@ -63,16 +60,14 @@ void testSomar()
     printf("%d\n", somar(1000, 99) == 1099);
 }
 
-void testFatorial()
-{
+void testFatorial() {
     show_log("testFatorial()");
     printf("%d\n", fatorial(3) == 6);
     printf("%d\n", fatorial(1) == 1);
     printf("%d\n", fatorial(5) == 120);
 }
 
-void testQ1()
-{
+void testQ1() {
     show_log("testQ1()");
     char str[11];
     strcpy(str, "29/02/2015");
@@ -87,8 +82,7 @@ void testQ1()
     printf("%d\n", q1(str) == 0);
 }
 
-void testQ2()
-{
+void testQ2() {
     show_log("testQ2()");
     char datainicial[11], datafinal[11];
     int qtdDias, qtdMeses, qtdAnos;
@@ -141,8 +135,7 @@ void testQ2()
     printf("%d\n", dma.qtdAnos == 0);
 }
 
-void testQ3()
-{
+void testQ3() {
     show_log("testQ3()");
     char str[250];
     strcpy(str, "Renato Lima Novais");
@@ -153,15 +146,13 @@ void testQ3()
     printf("%d\n", q3(str, 'L', 0) == 1);
 }
 
-void testQ4()
-{
+void testQ4() {
     show_log("testQ4()");
     char strTexto[250];
     char strBusca[50];
     int posicoes[30];
     int i;
-    for (i = 0; i < 30; i++)
-    {
+    for (i = 0; i < 30; i++) {
         posicoes[i] = -1;
     }
     strcpy(strTexto, "Laboratorio de programacao: para ratos de programação");
@@ -172,8 +163,7 @@ void testQ4()
     printf("%d\n", posicoes[2] == 34);
     printf("%d\n", posicoes[3] == 37);
 
-    for (i = 0; i < 30; i++)
-    {
+    for (i = 0; i < 30; i++) {
         posicoes[i] = -1;
     }
     strcpy(strTexto, "Olá, o mundo é muito grande. Tem muitas pessoas, e muitos problemas");
@@ -187,8 +177,7 @@ void testQ4()
     printf("%d\n", posicoes[5] == 54);
 }
 
-void testQ5()
-{
+void testQ5() {
     show_log("testQ5()");
     printf("%d\n", q5(345) == 543);
     printf("%d\n", q5(78) == 87);
@@ -196,8 +185,7 @@ void testQ5()
     printf("%d\n", q5(5430) == 345);
 }
 
-void testQ6()
-{
+void testQ6() {
     show_log("testQ6()");
     printf("%d\n", q6(34567368, 3) == 2);
     printf("%d\n", q6(34567368, 4576) == 0);
@@ -205,20 +193,19 @@ void testQ6()
     printf("%d\n", q6(3539343, 39) == 1);
 }
 
-void testQ7()
-{
+void testQ7() {
     show_log("testQ7()");
     char matrix[8][10] = {
-        { 'Q', 'M', 'J', 'D', 'L', 'A', 'Z', 'F', 'C', 'R' },
-        { 'N', 'B', 'Y', 'G', 'P', 'S', 'K', 'H', 'E', 'X' },
-        { 'V', 'O', 'W', 'U', 'T', 'I', 'Z', 'A', 'L', 'C' },
-        { 'M', 'Q', 'B', 'D', 'N', 'F', 'R', 'J', 'G', 'E' },
-        { 'H', 'S', 'K', 'T', 'U', 'X', 'W', 'O', 'P', 'Y' },
-        { 'C', 'Z', 'A', 'I', 'L', 'M', 'V', 'G', 'N', 'B' },
-        { 'D', 'F', 'E', 'H', 'S', 'K', 'J', 'Q', 'R', 'T' },
-        { 'U', 'X', 'Y', 'W', 'V', 'O', 'P', 'N', 'M', 'L' }
+        {'Q', 'M', 'J', 'D', 'L', 'A', 'Z', 'F', 'C', 'R'},
+        {'N', 'B', 'Y', 'G', 'P', 'S', 'K', 'H', 'E', 'X'},
+        {'V', 'O', 'W', 'U', 'T', 'I', 'Z', 'A', 'L', 'C'},
+        {'M', 'Q', 'B', 'D', 'N', 'F', 'R', 'J', 'G', 'E'},
+        {'H', 'S', 'K', 'T', 'U', 'X', 'W', 'O', 'P', 'Y'},
+        {'C', 'Z', 'A', 'I', 'L', 'M', 'V', 'G', 'N', 'B'},
+        {'D', 'F', 'E', 'H', 'S', 'K', 'J', 'Q', 'R', 'T'},
+        {'U', 'X', 'Y', 'W', 'V', 'O', 'P', 'N', 'M', 'L'}
     };
-    char stringBusca [6] = { 'F', 'E', 'H', 'S', 'K'};
+    char stringBusca[6] = {'F', 'E', 'H', 'S', 'K'};
     printf("%d\n", q7(matrix, stringBusca) == 1);
     strcpy(stringBusca, "KJQRT");
     printf("%d\n", q7(matrix, stringBusca) == 1);
