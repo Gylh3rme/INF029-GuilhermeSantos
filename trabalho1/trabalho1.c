@@ -313,8 +313,12 @@ int q4(char* strTexto, char* strBusca, int posicoes[30]) {
  */
 
 int q5(int num) {
-
-    return num;
+    int inverso = 0;
+    while (num != 0) {
+        inverso = (inverso * 10) + num % 10;
+        num /= 10;
+    }
+    return inverso;
 }
 
 /*
