@@ -249,7 +249,7 @@ int q3(char* texto, char c, int isCaseSensitive) {
             }
         }
     }
-    printf("\nqnt: %d\n", qtdOcorrencias);
+    //printf("\nqnt: %d\n", qtdOcorrencias);
     return qtdOcorrencias;
 }
 
@@ -273,8 +273,8 @@ int q4(char* strTexto, char* strBusca, int posicoes[30]) {
     int achou = 0;
     int i = 0, j = 1, l = 0;
     int acentos = 0;
-    printf("\n%s\n", strTexto);
-    printf("\n%s\n", strBusca);
+    //printf("\n%s\n", strTexto);
+    //printf("\n%s\n", strBusca);
     for (i = 0; strTexto[i] != '\0'; i++) {
         if (strTexto[i] == -61)
             acentos++;
