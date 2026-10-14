@@ -25,6 +25,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <math.h>
 DataQuebrada quebraData(char data[]);
 /*
 ## função utilizada para testes  ##
@@ -332,7 +333,35 @@ int q5(int num) {
  */
 
 int q6(int numerobase, int numerobusca) {
-    int qtdOcorrencias;
+    int qtdOcorrencias = 0;
+    int cont = 1;
+    //printf("\nnumero base: %d\n", numerobase);
+    //printf("\nnumero busca: %d\n", numerobusca);
+    int _nBusca = numerobusca;
+    while (numerobusca > 0) {
+        if (numerobusca / 10 > 0) {
+            cont++;
+        }
+        numerobusca /= 10;
+    }
+    int dig = 1;
+    //printf("\ncont = %d\n", cont);
+    for (int i = 0; i < cont; i++) {
+        dig *= 10;
+    }
+    //printf("\ndig: %d\n", dig);
+    numerobusca = _nBusca;
+    while (numerobase > 0) {
+        //printf("\nnumero base mod dig: %d\n", numerobase % dig);
+        if (numerobase % dig == numerobusca) {
+            qtdOcorrencias++;
+        }
+        numerobase /= 10;
+        //printf("\nnumero base / 10: %d\n", numerobase);
+    }
+
+    //printf("\n//////////////\n");
+
     return qtdOcorrencias;
 }
 
