@@ -387,10 +387,10 @@ int q7(char matriz[8][10], char palavra[5]) {
                         if (matriz[i][j + l] != palavra[l]) {
                             achou = 0;
                             break;
-                        }
-                        if (achou) {
-                            return 1;
-                        }
+                        }  
+                    }
+                    if (achou) {
+                       return 1;
                     }
                 }
                 if (j - (tam - 1) >= 0) {
@@ -399,10 +399,10 @@ int q7(char matriz[8][10], char palavra[5]) {
                             achou = 0;
                             break;
                         }
-                        if (achou) {
-                            return 1;
-                        }
-                    }
+                     }
+                     if (achou) {
+                        return 1;
+                      }
                 }
                 if (i + (tam - 1) < 8) {
                     for (int l = 1; palavra[l] != '\0'; l++) {
@@ -410,10 +410,10 @@ int q7(char matriz[8][10], char palavra[5]) {
                             achou = 0;
                             break;
                         }
-                        if (achou) {
-                            return 1;
-                        }
-                    }
+                      }
+                     if (achou) {
+                       return 1;
+                     }
                 }
                 if (i - (tam - 1) >= 0) {
                     for (int l = 1; palavra[l] != '\0'; l++) {
@@ -421,9 +421,9 @@ int q7(char matriz[8][10], char palavra[5]) {
                             achou = 0;
                             break;
                         }
-                        if (achou) {
-                            return 1;
-                        }
+                    }
+                    if (achou) {
+                       return 1;
                     }
                 }
                 if (j + (tam - 1) < 10 && i + (tam - 1) < 8) {
@@ -432,9 +432,9 @@ int q7(char matriz[8][10], char palavra[5]) {
                             achou = 0;
                             break;
                         }
-                        if (achou) {
-                            return 1;
-                        }
+                    }
+                    if (achou) {
+                       return 1;
                     }
                 }
                 if (j + (tam - 1) < 10 && i - (tam - 1) >= 0) {
@@ -443,10 +443,10 @@ int q7(char matriz[8][10], char palavra[5]) {
                             achou = 0;
                             break;
                         }
-                        if (achou) {
-                            return 1;
-                        }
                     }
+                    if (achou) {
+                      return 1;
+                     }
                 }
                 if (j - (tam - 1) >= 0 && i + (tam - 1) < 8) {
                     for (int l = 1; palavra[l] != '\0'; l++) {
@@ -454,10 +454,10 @@ int q7(char matriz[8][10], char palavra[5]) {
                             achou = 0;
                             break;
                         }
-                        if (achou) {
-                            return 1;
-                        }
                     }
+                    if (achou) {
+                       return 1;
+                     }
                 }
 
                 if (j - (tam - 1) >= 0 && i - (tam - 1) >= 0) {
@@ -466,10 +466,11 @@ int q7(char matriz[8][10], char palavra[5]) {
                             achou = 0;
                             break;
                         }
-                        if (achou) {
-                            return 1;
-                        }
+                        
                     }
+                   if (achou) {
+                     return 1;
+                   }
                 }
             }
         }
