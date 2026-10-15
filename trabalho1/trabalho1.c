@@ -376,7 +376,104 @@ int q6(int numerobase, int numerobusca) {
  */
 
 int q7(char matriz[8][10], char palavra[5]) {
-    int achou;
+    int achou = 0;
+    int tam = 5;
+    for (int i = 0; i < 8; i++) {
+        for (int j = 0; j < 10; j++) {
+            if (matriz[i][j] == palavra[0]) {
+                achou = 1;
+                if (j + (tam - 1) < 10) {
+                    for (int l = 1; palavra[l] != '\0'; l++) {
+                        if (matriz[i][j + l] != palavra[l]) {
+                            achou = 0;
+                            break;
+                        }
+                        if (achou) {
+                            return 1;
+                        }
+                    }
+                }
+                if (j - (tam - 1) >= 0) {
+                    for (int l = 1; palavra[l] != '\0'; l++) {
+                        if (matriz[i][j - l] != palavra[l]) {
+                            achou = 0;
+                            break;
+                        }
+                        if (achou) {
+                            return 1;
+                        }
+                    }
+                }
+                if (i + (tam - 1) < 8) {
+                    for (int l = 1; palavra[l] != '\0'; l++) {
+                        if (matriz[i + l][j] != palavra[l]) {
+                            achou = 0;
+                            break;
+                        }
+                        if (achou) {
+                            return 1;
+                        }
+                    }
+                }
+                if (i - (tam - 1) >= 0) {
+                    for (int l = 1; palavra[l] != '\0'; l++) {
+                        if (matriz[i - l][j] != palavra[l]) {
+                            achou = 0;
+                            break;
+                        }
+                        if (achou) {
+                            return 1;
+                        }
+                    }
+                }
+                if (j + (tam - 1) < 10 && i + (tam - 1) < 8) {
+                    for (int l = 1; palavra[l] != '\0'; l++) {
+                        if (matriz[i + l][j + l] != palavra[l]) {
+                            achou = 0;
+                            break;
+                        }
+                        if (achou) {
+                            return 1;
+                        }
+                    }
+                }
+                if (j + (tam - 1) < 10 && i - (tam - 1) >= 0) {
+                    for (int l = 1; palavra[l] != '\0'; l++) {
+                        if (matriz[i - l][j + l] != palavra[l]) {
+                            achou = 0;
+                            break;
+                        }
+                        if (achou) {
+                            return 1;
+                        }
+                    }
+                }
+                if (j - (tam - 1) >= 0 && i + (tam - 1) < 8) {
+                    for (int l = 1; palavra[l] != '\0'; l++) {
+                        if (matriz[i - l][j + l] != palavra[l]) {
+                            achou = 0;
+                            break;
+                        }
+                        if (achou) {
+                            return 1;
+                        }
+                    }
+                }
+
+                if (j - (tam - 1) >= 0 && i - (tam - 1) >= 0) {
+                    for (int l = 1; palavra[l] != '\0'; l++) {
+                        if (matriz[i - l][j - l] != palavra[l]) {
+                            achou = 0;
+                            break;
+                        }
+                        if (achou) {
+                            return 1;
+                        }
+                    }
+                }
+            }
+        }
+    }
     return achou;
 }
 
