@@ -4,13 +4,13 @@
 
 #include "trabalho2.h"
 
-int vetorPrincipal[TAM];
+Estrutura_Auxiliar vetorPrincipal[TAM];
 
 /*
 Objetivo: criar estrutura auxiliar na posição 'posicao'.
 com tamanho 'tamanho'
 
-Rertono (int)
+Retorno (int)
     SUCESSO - criado com sucesso
     JA_TEM_ESTRUTURA_AUXILIAR - já tem estrutura na posição
     POSICAO_INVALIDA - Posição inválida para estrutura auxiliar
@@ -19,20 +19,46 @@ Rertono (int)
 */
 int criarEstruturaAuxiliar(int posicao, int tamanho)
 {
-
     int retorno = 0;
-    // a posicao pode já existir estrutura auxiliar
-    retorno = JA_TEM_ESTRUTURA_AUXILIAR;
-    // se posição é um valor válido {entre 1 e 10}
-    retorno = POSICAO_INVALIDA;
-    // o tamanho ser muito grande
-    retorno = SEM_ESPACO_DE_MEMORIA;
-    // o tamanho nao pode ser menor que 1
-    retorno = TAMANHO_INVALIDO;
-    // deu tudo certo, crie
-    retorno = SUCESSO;
 
-    return retorno;
+    // verifica se posição é um valor válido {entre 1 e 10}
+    if(posicao < 1 || posicao > 10){
+        
+        retorno = POSICAO_INVALIDA;
+        return retorno;
+    }
+
+    int indice = posicao - 1;
+    Estrutura_Auxiliar * estrutura = &vetorPrincipal[indice];
+
+    // o tamanho nao pode ser menor que 1
+    if(tamanho < 1){
+        retorno = TAMANHO_INVALIDO;
+        return retorno;
+    }
+
+    // verifica se a posicao já possui estrutura auxiliar
+    if(estrutura->endereco != NULL){
+        retorno = JA_TEM_ESTRUTURA_AUXILIAR;
+        return retorno;
+    }
+
+    // tenta criar a estrutura auxiliar
+    int * temp = malloc(tamanho * sizeof(int));
+
+    // se falhar retorna NULL
+    if(temp == NULL){
+        retorno = SEM_ESPACO_DE_MEMORIA;
+        return retorno;
+    }
+    else{
+        // deu tudo certo, crie
+        retorno = SUCESSO;
+        estrutura->capacidade = tamanho;
+        estrutura->ocupados = 0;
+        estrutura->endereco = temp;
+        return retorno;
+    }
 }
 
 /*
@@ -51,16 +77,34 @@ int inserirNumeroEmEstrutura(int posicao, int valor)
     int temEspaco = 0;
     int posicao_invalida = 0;
 
+    if(posicao < 1 || posicao > 10){
+        posicao_invalida = 1;
+    }
+
     if (posicao_invalida)
         retorno = POSICAO_INVALIDA;
     else
     {
         // testar se existe a estrutura auxiliar
+        int indice = posicao - 1;
+
+        Estrutura_Auxiliar * estrutura = &vetorPrincipal[indice];
+
+        if(estrutura->endereco != NULL){
+            existeEstruturaAuxiliar = 1;
+        }
+
         if (existeEstruturaAuxiliar)
         {
+            if(estrutura->ocupados < estrutura->capacidade){
+                temEspaco = 1;
+            }
+
             if (temEspaco)
             {
                 //insere
+                estrutura->endereco[estrutura->ocupados] = valor;
+                estrutura->ocupados++;
                 retorno = SUCESSO;
             }
             else
@@ -82,7 +126,7 @@ Objetivo: excluir o numero 'valor' da estrutura auxiliar no final da estrutura.
 ex: suponha os valores [3, 8, 7, 9,  ,  ]. Após excluir, a estrutura deve ficar da seguinte forma [3, 8, 7,  ,  ,  ].
 Obs. Esta é uma exclusão lógica
 
-Rertono (int)
+Retorno (int)
     SUCESSO - excluido com sucesso
     ESTRUTURA_AUXILIAR_VAZIA - estrutura vazia
     SEM_ESTRUTURA_AUXILIAR - Não tem estrutura auxiliar
@@ -90,6 +134,23 @@ Rertono (int)
 */
 int excluirNumeroDoFinaldaEstrutura(int posicao)
 {
+    if(posicao < 1 || posicao > 10){
+        return POSICAO_INVALIDA;
+    }
+
+    int indice = posicao - 1;
+    Estrutura_Auxiliar * estrutura = &vetorPrincipal[indice];
+
+    if(estrutura->endereco == NULL){
+        return SEM_ESTRUTURA_AUXILIAR;
+    }
+
+    if(estrutura->ocupados < 1){
+        return ESTRUTURA_AUXILIAR_VAZIA;
+    }
+
+    //excluir aqui
+    
     int retorno = SUCESSO;
     return retorno;
 }
@@ -265,6 +326,11 @@ Objetivo: inicializa o programa. deve ser chamado ao inicio do programa
 
 void inicializar()
 {
+    for(int i = 0; i < TAM; i++){
+        vetorPrincipal[i].endereco = NULL;
+        vetorPrincipal[i].capacidade = 0;
+        vetorPrincipal[i].ocupados = 0;
+    }
 }
 
 /*
@@ -275,4 +341,11 @@ para poder liberar todos os espaços de memória das estruturas auxiliares.
 
 void finalizar()
 {
+    for(int i = 0; i < TAM; i++){
+        free(vetorPrincipal[i].endereco);
+        vetorPrincipal[i].endereco = NULL;
+        vetorPrincipal[i].capacidade = 0;
+        vetorPrincipal[i].ocupados = 0;
+    }
+    
 }
