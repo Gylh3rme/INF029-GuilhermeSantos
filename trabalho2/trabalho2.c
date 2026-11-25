@@ -28,7 +28,7 @@ int criarEstruturaAuxiliar(int posicao, int tamanho) {
     }
 
     int indice = posicao - 1;
-    Estrutura_Principal* vp = &vetorPrincipal[indice];
+    Estrutura_Principal * vp = &vetorPrincipal[indice];
 
     // o tamanho nao pode ser menor que 1
     if (tamanho < 1) {
@@ -161,7 +161,7 @@ Rertono (int)
 
 */
 int excluirNumeroEspecificoDeEstrutura(int posicao, int valor) {
-    int retorno = SUCESSO;
+    int retorno;
 
     if (posicao < 1 || posicao > 10) {
         retorno = POSICAO_INVALIDA;
@@ -180,13 +180,29 @@ int excluirNumeroEspecificoDeEstrutura(int posicao, int valor) {
         return retorno;
     }
 
+    int achou = -1;
+
     for (int i = 0; i < vp->ocupados; i++) {
         if (vp->estrutura_auxiliar[i] == valor) {
-            
+           achou = i;
+           break; 
         }
     }
 
-    return retorno;
+    if(achou != -1){
+        for(int i = achou; i < vp->ocupados - 1; i++){
+            vp->estrutura_auxiliar[i] = vp->estrutura_auxiliar[i+1];
+        }
+
+        vp->ocupados--;
+
+        retorno = SUCESSO;
+        return retorno;
+    }
+    else{
+        retorno = NUMERO_INEXISTENTE;
+        return retorno;
+    }
 }
 
 // se posição é um valor válido {entre 1 e 10}
@@ -211,8 +227,25 @@ Retorno (int)
 */
 int getDadosEstruturaAuxiliar(int posicao, int vetorAux[]) {
 
-    int retorno = 0;
+    int retorno;
 
+    if(ehPosicaoValida(posicao) == POSICAO_INVALIDA){
+        return POSICAO_INVALIDA;
+    }
+
+    int indice = posicao - 1;
+    
+    Estrutura_Principal * vp = &vetorPrincipal[indice];
+
+    if(vp->estrutura_auxiliar == NULL){
+        return SEM_ESTRUTURA_AUXILIAR;
+    }
+
+    for(int i =0; i < vp->ocupados; i++){
+        vetorAux[i] = vp->estrutura_auxiliar[i];
+    }
+
+    retorno = SUCESSO;
     return retorno;
 }
 
@@ -227,24 +260,62 @@ Rertono (int)
 */
 int getDadosOrdenadosEstruturaAuxiliar(int posicao, int vetorAux[]) {
 
-    int retorno = 0;
+    if(ehPosicaoValida(posicao) == POSICAO_INVALIDA){
+        return POSICAO_INVALIDA;
+    }
 
+    int indice = posicao - 1;
+    
+    Estrutura_Principal * vp = &vetorPrincipal[indice];
 
-    return retorno;
+    if(vp->estrutura_auxiliar == NULL){
+        return SEM_ESTRUTURA_AUXILIAR;
+    }
+
+    for(int i =0; i < vp->ocupados; i++){
+        vetorAux[i] = vp->estrutura_auxiliar[i];
+    }
+
+    int temp;
+    for(int j = 0; j < vp->ocupados; j++){
+        for(int i = 0; i < vp->ocupados - j - 1; i++){
+            if(vetorAux[i] > vetorAux[i+1]){
+                temp = vetorAux[i];
+                vetorAux[i] = vetorAux[i+1];
+                vetorAux[i+1] = temp;
+            }
+        }
+    }
+    
+    return SUCESSO;
 }
 
 /*
 Objetivo: retorna os números de todas as estruturas auxiliares.
 os números devem ser armazenados em vetorAux
 
-Rertono (int)
-    SUCESSO - recuperado com sucesso os valores da estrutura na posição 'posicao'
+Retorno (int)
+    SUCESSO - recuperado com sucesso os valores de todas as estrutura
     TODAS_ESTRUTURAS_AUXILIARES_VAZIAS - todas as estruturas auxiliares estão vazias
 */
 int getDadosDeTodasEstruturasAuxiliares(int vetorAux[]) {
+    int l = 0;
+    for(int i = 0; i < TAM; i++){
+        Estrutura_Principal * vp = &vetorPrincipal[i];
 
-    int retorno = 0;
-    return retorno;
+        if(vp->estrutura_auxiliar != NULL){
+            for(int j = 0; j < vp->ocupados; j++){
+                vetorAux[l] = vp->estrutura_auxiliar[j];
+                l++;
+            }
+        }
+    }
+
+    if(l == 0){
+        return TODAS_ESTRUTURAS_AUXILIARES_VAZIAS;
+    }
+
+    return SUCESSO;  
 }
 
 /*
@@ -256,9 +327,35 @@ Rertono (int)
     TODAS_ESTRUTURAS_AUXILIARES_VAZIAS - todas as estruturas auxiliares estão vazias
 */
 int getDadosOrdenadosDeTodasEstruturasAuxiliares(int vetorAux[]) {
+    int l = 0;
 
-    int retorno = 0;
-    return retorno;
+    for(int i = 0; i < TAM; i++){
+        Estrutura_Principal * vp = &vetorPrincipal[i];
+
+        if(vp->estrutura_auxiliar != NULL){
+            for(int j = 0; j < vp->ocupados; j++){
+                vetorAux[l] = vp->estrutura_auxiliar[j];
+                l++;
+            }
+        }
+    }
+
+    if(l == 0){
+        return TODAS_ESTRUTURAS_AUXILIARES_VAZIAS;
+    }
+
+    int temp;
+    for(int j = 0; j < l; j++){
+        for(int i = 0; i < l - j - 1; i++){
+            if(vetorAux[i] > vetorAux[i+1]){
+                temp = vetorAux[i];
+                vetorAux[i] = vetorAux[i+1];
+                vetorAux[i+1] = temp;
+            }
+        }
+    }
+
+    return SUCESSO; 
 }
 
 /*
@@ -274,8 +371,35 @@ Rertono (int)
 */
 int modificarTamanhoEstruturaAuxiliar(int posicao, int novoTamanho) {
 
-    int retorno = 0;
-    return retorno;
+    if(ehPosicaoValida(posicao) == POSICAO_INVALIDA){
+        return POSICAO_INVALIDA;
+    }
+
+    int indice = posicao - 1;
+
+    Estrutura_Principal * vp = &vetorPrincipal[indice];
+
+    if(vp->estrutura_auxiliar == NULL){
+        return SEM_ESTRUTURA_AUXILIAR;
+    }
+    
+    int tamanho = vp->capacidade + novoTamanho;
+    
+    if (tamanho < 1 || tamanho < vp->ocupados){
+        return NOVO_TAMANHO_INVALIDO;
+    }
+    
+    int * temp = realloc(vp->estrutura_auxiliar, tamanho * sizeof(int));
+
+    if(temp == NULL){
+        return SEM_ESPACO_DE_MEMORIA;
+    }
+    else{
+        vp->capacidade = tamanho;
+        vp->estrutura_auxiliar = temp;
+        return SUCESSO;
+    }
+
 }
 
 /*
@@ -289,9 +413,23 @@ Retorno (int)
 */
 int getQuantidadeElementosEstruturaAuxiliar(int posicao) {
 
-    int retorno = 0;
+    if(ehPosicaoValida(posicao) == POSICAO_INVALIDA){
+        return POSICAO_INVALIDA;
+    }
 
-    return retorno;
+    int indice = posicao - 1;
+
+    Estrutura_Principal * vp = &vetorPrincipal[indice];
+
+    if(vp->estrutura_auxiliar == NULL){
+        return SEM_ESTRUTURA_AUXILIAR;
+    }
+    
+    if(vp->ocupados < 1){
+        return ESTRUTURA_AUXILIAR_VAZIA;
+    }
+
+    return vp->ocupados;
 }
 
 /*
