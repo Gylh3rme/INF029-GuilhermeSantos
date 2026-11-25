@@ -369,38 +369,42 @@ Rertono (int)
     NOVO_TAMANHO_INVALIDO - novo tamanho não pode ser negativo
     SEM_ESPACO_DE_MEMORIA - erro na alocação do novo valor
 */
+
 int modificarTamanhoEstruturaAuxiliar(int posicao, int novoTamanho) {
 
-    if(ehPosicaoValida(posicao) == POSICAO_INVALIDA){
+    if (ehPosicaoValida(posicao) == POSICAO_INVALIDA) {
         return POSICAO_INVALIDA;
     }
 
     int indice = posicao - 1;
+    Estrutura_Principal *vp = &vetorPrincipal[indice];
 
-    Estrutura_Principal * vp = &vetorPrincipal[indice];
-
-    if(vp->estrutura_auxiliar == NULL){
+    if (vp->estrutura_auxiliar == NULL) {
         return SEM_ESTRUTURA_AUXILIAR;
     }
-    
+
     int tamanho = vp->capacidade + novoTamanho;
-    
-    if (tamanho < 1 || tamanho < vp->ocupados){
+
+    if (tamanho < 1) {
         return NOVO_TAMANHO_INVALIDO;
     }
-    
-    int * temp = realloc(vp->estrutura_auxiliar, tamanho * sizeof(int));
 
-    if(temp == NULL){
+    int *temp = realloc(vp->estrutura_auxiliar, tamanho * sizeof(int));
+
+    if (temp == NULL) {
         return SEM_ESPACO_DE_MEMORIA;
     }
-    else{
-        vp->capacidade = tamanho;
-        vp->estrutura_auxiliar = temp;
-        return SUCESSO;
+
+    vp->estrutura_auxiliar = temp;
+    vp->capacidade = tamanho;
+
+    if (vp->ocupados > tamanho) {
+        vp->ocupados = tamanho;
     }
 
+    return SUCESSO;
 }
+
 
 /*
 Objetivo: retorna a quantidade de elementos preenchidos da estrutura auxiliar da posição 'posicao'.
@@ -440,8 +444,34 @@ Retorno (No*)
     No*, ponteiro para o início da lista com cabeçote
 */
 No* montarListaEncadeadaComCabecote() {
+    No *cabecote = NULL;
+    No *atual = NULL;
+    No *novo = NULL;
 
-    return NULL;
+    cabecote = malloc(sizeof(No));
+    if(cabecote != NULL){
+        cabecote->prox = NULL;
+        atual = cabecote;
+    }
+    else return NULL;
+    
+    for(int i = 0; i < TAM; i++){
+        Estrutura_Principal *vp = &vetorPrincipal[i];
+
+        if(vp->estrutura_auxiliar != NULL){
+            
+            for(int j = 0; j < vp->ocupados; j++){
+                novo = malloc(sizeof(No));
+                if(novo != NULL){
+                    novo->conteudo = vp->estrutura_auxiliar[j];
+                    novo->prox = NULL;
+                    atual->prox = novo;
+                    atual = novo;
+                }
+            }
+        }
+    }
+    return cabecote;
 }
 
 /*
