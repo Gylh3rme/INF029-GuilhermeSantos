@@ -23,11 +23,11 @@ int main()
     testeInserirComEstrutura();
     testeExcluir();
     testeExcluirNumeroEspecifico();
-    //testeListar();
-    //testeRetornarTodosNumeros();
-    //testeMudarTamanhoEstrutura();
-    //testeListaEncadeada();
-    //finalizar();
+    testeListar();
+    testeRetornarTodosNumeros();
+    testeMudarTamanhoEstrutura();
+    testeListaEncadeada();
+    finalizar();
 }
 int ligado = 1;
 void show_log(char *str)
